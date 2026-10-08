@@ -17,5 +17,10 @@ def prettyfsize(fsize: int) -> str:
 if __name__ == "__main__":
     import sys
 
-    for arg in sys.argv[1:]:
-        print(prettyfsize(int(arg)))
+    args = sys.argv[1:]
+    if len(args) == 3 and args[1] == "to":
+        for x in range(int(args[0]), int(args[2]) + 1):
+            print(prettyfsize(x))
+    else:
+        for arg in args:
+            print(prettyfsize(int(arg)))
