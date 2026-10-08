@@ -1,5 +1,4 @@
 from py import prettyfsize
-import random
 import humanize
 
 # Maximum value for which humanize.naturalsize(value, True) prints in TiB
