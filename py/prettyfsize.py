@@ -12,3 +12,10 @@ def prettyfsize(fsize: int) -> str:
     if fsize < 1024 * 1024 * 1024 * 1024:
         return f"{fsize / (1024 * 1024 * 1024):.3f} GiB"
     return f"{fsize / (1024 * 1024 * 1024 * 1024):.3f} TiB"
+
+
+if __name__ == "__main__":
+    import sys
+
+    for arg in sys.argv[1:]:
+        print(prettyfsize(int(arg)))
