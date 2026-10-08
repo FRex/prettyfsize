@@ -27,7 +27,7 @@ def _main():
 
     # dedup and sort
     totest = sorted(set(totest))
-    print(f"Total test cases: {len(totest):,}")
+    print(f"\nTotal test cases: {len(totest):,}\n")  # newlines for spacing
 
     okay = 0
     for fsize in totest:
@@ -40,6 +40,7 @@ def _main():
             okay += 1
 
     print(okay, "okay out of", len(totest))
+    print(len(totest) - okay, "broken.")
 
 
 if __name__ == "__main__":
