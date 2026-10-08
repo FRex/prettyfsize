@@ -5,11 +5,11 @@ import humanize
 MAXIMUM_HUMANIZE_VALUE = 2**50 - 4
 
 
-def _main():
-
+def _create_test_cases():
     cases = []
 
     case = list(range(0, 2**20))
+    print("Test cases:")
     print(f"All numbers in range [{min(case)}, {max(case)}].")
     cases.append(case)
 
@@ -25,7 +25,11 @@ def _main():
     totest = totest + [-x for x in totest]
 
     # dedup and sort
-    totest = sorted(set(totest))
+    return sorted(set(totest))
+
+
+def _main():
+    totest = _create_test_cases()
     print(f"\nTotal test cases: {len(totest):,}\n")  # newlines for spacing
 
     okay = 0
