@@ -1,50 +1,44 @@
-from py import prettyfsize
-import humanize
+import subprocess
 
 # Maximum value for which humanize.naturalsize(value, True) prints in TiB
 MAXIMUM_HUMANIZE_VALUE = 2**50 - 4
 
-
-def _create_test_cases():
-    cases = []
-
-    case = list(range(0, 2**20))
-    print("Test cases:")
-    print(f"All numbers in range [{min(case)}, {max(case)}].")
-    cases.append(case)
-
-    exp = 49
-    print(f"All powers of two from 0th to {exp}th (inclusive).")
-    cases.append([2**x for x in range(exp + 1)])
-
-    print(f"MAXIMUM_HUMANIZE_VALUE aka {MAXIMUM_HUMANIZE_VALUE}")
-    cases.append([MAXIMUM_HUMANIZE_VALUE])
-
-    print("All negative versions of these numbers.")
-    totest = sum(cases, [])
-    totest = totest + [-x for x in totest]
-
-    # dedup and sort
-    return sorted(set(totest))
+BINARIES = (
+    ("python3", "py/prettyfsize.py"),
+    ("python3", "testprograms/usinghumanize.py"),
+)
 
 
-def _main():
-    totest = _create_test_cases()
-    print(f"\nTotal test cases: {len(totest):,}\n")  # newlines for spacing
+def run_all_binaries(args: list) -> list:
+    jobs = []
+    for binary in BINARIES:
+        fullargs = list(binary) + list(map(str, args))
+        j = subprocess.Popen(fullargs, stdout=subprocess.PIPE, bufsize=1024 * 1024)
+        jobs.append(j)
+    ret = []
+    for j in jobs:
+        ret.append(j.communicate()[0])
+    return ret
 
-    okay = 0
-    for fsize in totest:
-        a = humanize.naturalsize(fsize, binary=True, format="%.3f")
-        b = prettyfsize.prettyfsize(fsize)
 
-        if a != b:
-            print(fsize, a, b)
-        else:
-            okay += 1
+def test_surrounding(middle, exp):
+    print(f"Checking 2^{exp} numbers in both directions around {middle}.")
+    magnitude = 2**exp
+    outs = run_all_binaries([middle - magnitude, "to", middle + magnitude])
+    if len(set(outs)) == 1:
+        print("Answer: yes.\n")
+    else:
+        print("Answer: NO!\n")
 
-    print(okay, "okay out of", len(totest))
-    print(len(totest) - okay, "broken.")
+
+def main():
+    exp = 20
+    midpoints = [0, 2**32, 2**16, MAXIMUM_HUMANIZE_VALUE - 2**exp]
+    midpoints = midpoints + [-x for x in midpoints]
+    midpoints = sorted(set(midpoints))
+    for mid in midpoints:
+        test_surrounding(mid, exp)
 
 
 if __name__ == "__main__":
-    _main()
+    main()
