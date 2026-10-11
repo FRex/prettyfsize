@@ -38,7 +38,7 @@ void prettyfsize(char * buff, double fsize)
 
     if (fsize < 1024.0 * 1024.0 * 1024.0 * 1024.0)
     {
-        sprintf(buff, "%.3f MiB", fsize / (1024.0 * 1024.0 * 1024.0));
+        sprintf(buff, "%.3f GiB", fsize / (1024.0 * 1024.0 * 1024.0));
         return;
     }
 
