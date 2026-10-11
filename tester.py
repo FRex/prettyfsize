@@ -30,6 +30,8 @@ def test_surrounding(middle, exp):
         print("Answer: yes.\n")
     else:
         print("Answer: NO!\n")
+        # print the binaries used (last part is script name, exe name, etc.)
+        print(tuple(bin[-1] for bin in BINARIES))
         # get some examples of failures of formatting, but not all (for performance reasons)
         lines = [out[:9123].split(b"\n")[:20] for out in outs]
         for group in zip(*lines):
