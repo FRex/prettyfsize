@@ -6,6 +6,7 @@ MAXIMUM_HUMANIZE_VALUE = 2**50 - 4
 BINARIES = (
     ("python3", "py/prettyfsize.py"),
     ("python3", "testprograms/usinghumanize.py"),
+    ("testprograms/usingc.exe",),
 )
 
 
