@@ -30,6 +30,10 @@ def test_surrounding(middle, exp):
         print("Answer: yes.\n")
     else:
         print("Answer: NO!\n")
+        # get some examples of failures of formatting, but not all (for performance reasons)
+        lines = [out[:9123].split(b"\n")[:20] for out in outs]
+        for group in zip(*lines):
+            print(group)
 
 
 def main():
