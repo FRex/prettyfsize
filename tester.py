@@ -9,7 +9,6 @@ BINARIES = (
     ("python3", "py/prettyfsize.py"),
     ("python3", "testprograms/usinghumanize.py"),
     ("testprograms/usingc.exe",),
-    # NOTE: lua programs write out with \r\n on windows...
     ("lua51.exe", "testprograms/usinglua.lua"),
     ("G:/mybin/luajitdir/luajit.exe", "testprograms/usinglua.lua"),
     ("lua52.exe", "testprograms/usinglua.lua"),
