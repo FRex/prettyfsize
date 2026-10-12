@@ -4,16 +4,10 @@
 
 #include "../c/prettyfsize.h"
 
-#include <fcntl.h>
-#include <io.h>
-
 static int samestring(const char * a, const char * b) {return 0 == strcmp(a, b);}
 
 int main(int argc, char ** argv)
 {
-    /* force windows stdout to not use \r\n but \n only */
-    setmode(fileno(stdout), O_BINARY);
-
     if(argc == 4 && samestring(argv[2], "to"))
     {
         long long a = strtoll(argv[1], NULL, 10);
