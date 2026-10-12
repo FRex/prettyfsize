@@ -1,4 +1,6 @@
 import subprocess
+import shlex
+import time
 
 # Maximum value for which humanize.naturalsize(value, True) prints in TiB
 MAXIMUM_HUMANIZE_VALUE = 2**50 - 4
@@ -17,15 +19,20 @@ BINARIES = (
 )
 
 
-def run_all_binaries(args: list) -> list:
+def run_all_binaries(args: list, benchmark=False) -> list:
     jobs = []
+    ret = []
     for binary in BINARIES:
         fullargs = list(binary) + list(map(str, args))
-        j = subprocess.Popen(fullargs, stdout=subprocess.PIPE, bufsize=1024 * 1024)
+        start_time = time.perf_counter()
+        j = subprocess.Popen(fullargs, stdout=subprocess.PIPE, bufsize=1024 * 1024 * 32)
+        if benchmark:
+            ret.append(j.communicate()[0].replace(b"\r\n", b"\n"))
+            print(f"{time.perf_counter() - start_time:.3f}", "--", shlex.join(fullargs))
         jobs.append(j)
-    ret = []
-    for j in jobs:
-        ret.append(j.communicate()[0].replace(b"\r\n", b"\n"))
+    if not benchmark:
+        for j in jobs:
+            ret.append(j.communicate()[0].replace(b"\r\n", b"\n"))
     return ret
 
 
