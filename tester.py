@@ -7,6 +7,13 @@ BINARIES = (
     ("python3", "py/prettyfsize.py"),
     ("python3", "testprograms/usinghumanize.py"),
     ("testprograms/usingc.exe",),
+    # NOTE: lua programs write out with \r\n on windows...
+    ("lua51.exe", "testprograms/usinglua.lua"),
+    ("G:/mybin/luajitdir/luajit.exe", "testprograms/usinglua.lua"),
+    ("lua52.exe", "testprograms/usinglua.lua"),
+    ("lua53.exe", "testprograms/usinglua.lua"),
+    ("lua54.exe", "testprograms/usinglua.lua"),
+    ("lua55.exe", "testprograms/usinglua.lua"),
 )
 
 
@@ -18,7 +25,7 @@ def run_all_binaries(args: list) -> list:
         jobs.append(j)
     ret = []
     for j in jobs:
-        ret.append(j.communicate()[0])
+        ret.append(j.communicate()[0].replace(b"\r\n", b"\n"))
     return ret
 
 
