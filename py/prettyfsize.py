@@ -5,13 +5,13 @@ def prettyfsize(fsize: int) -> str:
         return "1 Byte"
     if fsize < 1024:
         return f"{fsize} Bytes"
-    if fsize < 1024 * 1024:
+    if fsize < 1024**2:
         return f"{fsize / 1024:.3f} KiB"
-    if fsize < 1024 * 1024 * 1024:
-        return f"{fsize / (1024 * 1024):.3f} MiB"
-    if fsize < 1024 * 1024 * 1024 * 1024:
-        return f"{fsize / (1024 * 1024 * 1024):.3f} GiB"
-    return f"{fsize / (1024 * 1024 * 1024 * 1024):.3f} TiB"
+    if fsize < 1024**3:
+        return f"{fsize / (1024 **2):.3f} MiB"
+    if fsize < 1024**4:
+        return f"{fsize / (1024 ** 3):.3f} GiB"
+    return f"{fsize / (1024 ** 4):.3f} TiB"
 
 
 if __name__ == "__main__":
